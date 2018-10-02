@@ -2,22 +2,27 @@ var app = new Vue({
   el: '#app',
   data: {
     inputStr: '',
-    outputStr: '左のテキストエリアへ文字列を入力してください',
     replaceList: [],
     before: '',
     after: ''
   },
-  methods: {
+  computed: {
     /**
-     * 文字列の置換を実行する
+     * 入力テキストを置換したものを出力する
      */
-    doReplace: function (event) {
-      this.outputStr = this.inputStr
+    outputStr: function() {
+      var tmpStr = this.inputStr
+      if (tmpStr.length == 0) {
+        return '左のテキストエリアへ文字列を入力してください'
+      }
       for (var i = 0; i < this.replaceList.length; i++) {
         var data = this.replaceList[i]
-        this.outputStr = this.outputStr.replace(data.before, data.after)
+        tmpStr = tmpStr.replace(data.before, data.after)
       }
-    },
+      return tmpStr
+    }
+  },
+  methods: {
     /**
      * 置換対象の文字列一覧を取得する(API通信)
      */
