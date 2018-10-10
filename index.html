@@ -22,7 +22,7 @@
             </div>
             <div id="rightContents">
                 <p>置換後<button v-on:click="copyAfter">コピー</button></p>
-                <textarea v-model="outputStr"  rows="50" id="afterStr" readonly></textarea>
+                <div id="afterStr" class="outputBox" v-html="outputStr"></div>
             </div>
         </div>
         <div id="currentList">
@@ -49,6 +49,7 @@
         </div>
     </div>
 </div>
+<textarea id="copyArea" class="hiddenParts"></textarea>
 <script src="main.js"></script>
 </body>
 </html>

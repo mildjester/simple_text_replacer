@@ -46,6 +46,10 @@ input.textbox{
     font-size: 16px;
 }
 
+.hiddenParts {
+    display: none;
+}
+
 /**
  * ---- ブロック別 -----------------------------------------------
  */
@@ -76,6 +80,7 @@ input.textbox{
 #leftContents textarea {
     width: 100%;
     height: calc(100% - 25px);
+    font-family: "serif";
 }
 
 #rightContents {
@@ -83,9 +88,19 @@ input.textbox{
     padding: 10px;
     border: 1px solid #000000;
 }
-#rightContents textarea {
-    width: 100%;
-    height: calc(100% - 25px);
+
+#rightContents div.outputBox {
+    margin: 0.5px 0.5px;
+    border: solid 1px #777777;
+    font-size: 11px;
+    font-family: "serif";
+    word-wrap: break-word;
+    height: calc(100% - 30px);
+}
+
+#rightContents span.replaced {
+    color: #ff4444;
+    font-weight: bold;
 }
 
 #currentList {

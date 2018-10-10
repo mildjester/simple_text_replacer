@@ -6,19 +6,26 @@ var app = new Vue({
     before: '',
     after: ''
   },
+  created: function () {
+    // 画面表示時に置換リストを取得しておく
+    this.getList()
+  },
   computed: {
     /**
      * 入力テキストを置換したものを出力する
      */
     outputStr: function() {
-      var tmpStr = this.inputStr
+      var tmpStr = escapeHTML(this.inputStr)
       if (tmpStr.length == 0) {
         return '左のテキストエリアへ文字列を入力してください'
       }
+      tmpStr = tmpStr.split(' ').join('&nbsp;');
       for (var i = 0; i < this.replaceList.length; i++) {
         var data = this.replaceList[i]
-        tmpStr = tmpStr.replace(data.before, data.after)
+        tmpStr = tmpStr.split(data.before).join('<span class="replaced">' + data.after + '</span>');
+        // tmpStr = tmpStr.replace(data.before, '<span class="replaced">' + data.after + '</span>')
       }
+      tmpStr = tmpStr.replace(/\r?\n/g, '<br/>')
       return tmpStr
     }
   },
@@ -84,9 +91,23 @@ var app = new Vue({
      * 置換後の文字列クリップボードにコピーする
      */
     copyAfter: function () {
-      document.getElementById('afterStr').select()
+      var elm = document.getElementById('copyArea')
+      elm.style.display="block";
+      elm.value = document.getElementById('afterStr').innerText
+      elm.select()
       document.execCommand("copy")
+      elm.style.display="none";
     }
   }
 })
-app.getList()
+
+/**
+ * 文字列のHTMLタグをエスケープする
+ */
+function escapeHTML(str) {
+  return str.replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
