@@ -26,6 +26,7 @@ var app = new Vue({
         // tmpStr = tmpStr.replace(data.before, '<span class="replaced">' + data.after + '</span>')
       }
       tmpStr = tmpStr.replace(/\r?\n/g, '<br/>')
+      tmpStr = tmpStr.split(' ').join('&nbsp;')
       return tmpStr
     }
   },
