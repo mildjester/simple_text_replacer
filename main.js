@@ -22,11 +22,12 @@ var app = new Vue({
       tmpStr = tmpStr.split(' ').join('&nbsp;');
       for (var i = 0; i < this.replaceList.length; i++) {
         var data = this.replaceList[i]
-        tmpStr = tmpStr.split(data.before).join('<span class="replaced">' + data.after + '</span>');
-        // tmpStr = tmpStr.replace(data.before, '<span class="replaced">' + data.after + '</span>')
+        tmpStr = tmpStr.split(data.before).join('<replaced>' + data.after + '</replaced>');
       }
       tmpStr = tmpStr.replace(/\r?\n/g, '<br/>')
       tmpStr = tmpStr.split(' ').join('&nbsp;')
+      tmpStr = tmpStr.split('<replaced>').join('<span class="replaced">')
+      tmpStr = tmpStr.split('</replaced>').join('</span>')
       return tmpStr
     }
   },
@@ -94,7 +95,9 @@ var app = new Vue({
     copyAfter: function () {
       var elm = document.getElementById('copyArea')
       elm.style.display="block";
-      elm.value = document.getElementById('afterStr').innerText
+      var tmpStr = document.getElementById('afterStr').innerText
+      tmpStr = tmpStr.split(' ').join(' '); // &nbsp;を普通のスペースに変換している
+      elm.value = tmpStr
       elm.select()
       document.execCommand("copy")
       elm.style.display="none";
